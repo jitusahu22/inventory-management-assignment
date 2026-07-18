@@ -1,24 +1,92 @@
-/**
- * KAFKA CONSUMER PLACEHOLDER
- * 
- * This file will eventually contain the logic to consume events from Kafka topics.
- * 
- * Future Architecture Integration:
- * --------------------------------
- * 1. Initialize Consumer: A Kafka consumer instance will be created, subscribed to topics 
- *    (e.g., `inventory.purchases`, `inventory.sales`), and run continuously in the background.
- * 
- * 2. Event Driven Processing:
- *    - Instead of only accepting purchases/sales via HTTP POST requests, the system can 
- *      listen to a message queue.
- *    - When a "Process Purchase" message arrives on the topic, the consumer will parse the payload 
- *      and directly call the `processPurchase` function from `src/services/purchaseService.js`.
- *    - When a "Process Sale" message arrives, it will call `processSale` from `src/services/saleService.js`.
- * 
- * 3. Reuse of Services: Because we separated our business logic into `src/services/`, the Kafka 
- *    consumer can utilize the exact same validation, database insertion, and FIFO calculation logic 
- *    as the REST API, keeping the application modular and DRY.
- */
+const kafka = require("../config/kafka");
+const { processPurchase } = require("../services/purchaseService");
+const { processSale } = require("../services/saleService");
 
-// Example placeholder function
-// const runConsumer = async () => { ... }
+const TOPICS = {
+  PURCHASES: "inventory.purchases",
+  SALES: "inventory.sales",
+};
+
+const consumer = kafka.consumer({
+  groupId: process.env.KAFKA_CONSUMER_GROUP || "inventory-consumer-group",
+});
+
+let isRunning = false;
+
+const runConsumer = async () => {
+  try {
+    await consumer.connect();
+    console.log("Kafka Consumer connected successfully");
+
+    await consumer.subscribe({ topic: TOPICS.PURCHASES, fromBeginning: false });
+    await consumer.subscribe({ topic: TOPICS.SALES, fromBeginning: false });
+    console.log(`[Kafka Consumer] Subscribed to topics: ${Object.values(TOPICS).join(", ")}`);
+
+    await consumer.run({
+      eachMessage: async ({ topic, partition, message }) => {
+        const value = message.value?.toString();
+        if (!value) {
+          console.warn(`[Kafka Consumer] Empty message received on topic '${topic}'`);
+          return;
+        }
+
+        let event;
+        try {
+          event = JSON.parse(value);
+        } catch (parseError) {
+          console.error(`[Kafka Consumer] Failed to parse message on topic '${topic}':`, parseError.message);
+          return;
+        }
+
+        console.log(`[Kafka Consumer] Received event on topic '${topic}':`, event.event_type);
+
+        try {
+          if (topic === TOPICS.PURCHASES && event.event_type === "PURCHASE_RECORDED") {
+            console.log(`[Kafka Consumer] Processing purchase for product '${event.product_id}'`);
+            await processPurchase(
+              event.product_id,
+              event.quantity,
+              event.unit_price,
+              event.timestamp,
+              { skipKafka: true }
+            );
+            console.log(`[Kafka Consumer] Purchase processed successfully for product '${event.product_id}'`);
+          } else if (topic === TOPICS.SALES && event.event_type === "SALE_RECORDED") {
+            console.log(`[Kafka Consumer] Processing sale for product '${event.product_id}'`);
+            await processSale(
+              event.product_id,
+              event.quantity,
+              event.timestamp,
+              { skipKafka: true }
+            );
+            console.log(`[Kafka Consumer] Sale processed successfully for product '${event.product_id}'`);
+          } else {
+            console.warn(`[Kafka Consumer] Unknown event type '${event.event_type}' on topic '${topic}'`);
+          }
+        } catch (processingError) {
+          console.error(`[Kafka Consumer] Error processing event on topic '${topic}':`, processingError.message);
+        }
+      },
+    });
+
+    isRunning = true;
+  } catch (error) {
+    console.warn("Kafka Consumer connection failed:", error.message);
+    console.warn("Kafka consumer will not process events. REST API continues to work normally.");
+    isRunning = false;
+  }
+};
+
+const stopConsumer = async () => {
+  if (isRunning) {
+    try {
+      await consumer.disconnect();
+      isRunning = false;
+      console.log("Kafka Consumer disconnected");
+    } catch (error) {
+      console.warn("Kafka Consumer disconnect error:", error.message);
+    }
+  }
+};
+
+module.exports = { runConsumer, stopConsumer };

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Card,
   CardContent,
@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import api from "../api/api";
 
-const SaleForm = ({ onSuccess }) => {
+const SaleForm = ({ onSuccess, refreshKey }) => {
   const [formData, setFormData] = useState({
     product_id: "",
     quantity: "",
@@ -20,6 +20,7 @@ const SaleForm = ({ onSuccess }) => {
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [products, setProducts] = useState([]);
+  const timeoutRef = useRef(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -31,6 +32,12 @@ const SaleForm = ({ onSuccess }) => {
       }
     };
     fetchProducts();
+  }, [refreshKey]);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
   }, []);
 
   const handleSubmit = async (e) => {
@@ -47,12 +54,13 @@ const SaleForm = ({ onSuccess }) => {
       };
 
       const response = await api.post("/sale", payload);
-      setSuccessMsg(`Sale successful! Cost: $${response.data.sale.total_cost}`);
+      setSuccessMsg(`Sale successful! Cost: ₹${response.data.sale.total_cost}`);
       setFormData({ product_id: "", quantity: "" });
       onSuccess();
       
       // Clear success message after 3 seconds
-      setTimeout(() => setSuccessMsg(""), 3000);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      timeoutRef.current = setTimeout(() => setSuccessMsg(""), 3000);
     } catch (err) {
       setError(err.response?.data?.error || "Sale failed");
     } finally {
@@ -99,7 +107,7 @@ const SaleForm = ({ onSuccess }) => {
               "& .MuiAutocomplete-listbox": { bgcolor: "#1e293b", color: "#f1f5f9" },
               "& .MuiAutocomplete-paper": { bgcolor: "#1e293b", color: "#f1f5f9" }
             }}
-            componentsProps={{
+            slotProps={{
               paper: {
                 sx: {
                   bgcolor: "#1e293b",

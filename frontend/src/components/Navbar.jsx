@@ -10,9 +10,10 @@ const Navbar = ({ user, onLogout }) => {
   const handleLogout = async () => {
     try {
       await api.post("/auth/logout");
-      onLogout(null);
     } catch (error) {
       console.error("Logout failed", error);
+    } finally {
+      onLogout(null);
     }
   };
 

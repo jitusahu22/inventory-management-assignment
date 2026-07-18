@@ -59,8 +59,8 @@ const TransactionLedger = ({ ledger }) => {
                     <TableCell align="right" sx={{ color: "#f1f5f9", borderBottom: "1px solid #334155" }}>{txn.quantity}</TableCell>
                     <TableCell align="right" sx={{ color: "#f1f5f9", borderBottom: "1px solid #334155" }}>
                       {txn.type === "purchase"
-                        ? `$${parseFloat(txn.unit_price).toFixed(2)}/u`
-                        : `$${parseFloat(txn.total_cost).toFixed(2)}`}
+                        ? `₹${parseFloat(txn.unit_price || 0).toFixed(2)}/u`
+                        : `₹${parseFloat(txn.total_cost || 0).toFixed(2)}`}
                     </TableCell>
                   </TableRow>
                 ))

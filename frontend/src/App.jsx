@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { Box, CircularProgress } from "@mui/material";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
@@ -27,7 +28,11 @@ function App() {
   }, []);
 
   if (loading) {
-    return null;
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh", bgcolor: "#0f172a" }}>
+        <CircularProgress sx={{ color: "#3b82f6" }} />
+      </Box>
+    );
   }
 
   return (
@@ -59,6 +64,7 @@ function App() {
             )
           }
         />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </>
   );

@@ -1,13 +1,19 @@
 const { pool } = require("../config/db");
+const { publishPurchaseEvent } = require("../kafka/producer");
 
 /**
  * Create a new inventory batch (purchase).
  * Validates the product exists, and that quantity/unit_price are positive.
+ * Publishes a Kafka event after successful DB write (unless skipKafka is set).
  *
- * NOTE: Later, the Kafka Consumer will call this same function
- * when it receives a purchase event from the producer topic.
+ * @param {string} product_id
+ * @param {number} quantity
+ * @param {number} unit_price
+ * @param {string} timestamp
+ * @param {object} [options]
+ * @param {boolean} [options.skipKafka=false] - Skip Kafka event publishing (used by consumer)
  */
-const processPurchase = async (product_id, quantity, unit_price, timestamp) => {
+const processPurchase = async (product_id, quantity, unit_price, timestamp, options = {}) => {
   // --- Validate required fields ---
   if (!product_id || quantity == null || unit_price == null || !timestamp) {
     throw {
@@ -43,10 +49,15 @@ const processPurchase = async (product_id, quantity, unit_price, timestamp) => {
     [product_id, quantity, quantity, unit_price, timestamp]
   );
 
-  // TODO: After Kafka is integrated, publish a "purchase" event here
-  // so other services can react to new inventory arrivals.
+  const batch = result.rows[0];
 
-  return result.rows[0];
+  // Publish Kafka event (non-blocking — failure does not affect the API response)
+  // Skip when called from Kafka consumer to prevent infinite event loops
+  if (!options.skipKafka) {
+    await publishPurchaseEvent(batch);
+  }
+
+  return batch;
 };
 
 module.exports = { processPurchase };

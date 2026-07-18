@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import api from "../api/api";
 
-const PurchaseForm = ({ onSuccess }) => {
+const PurchaseForm = ({ onSuccess, refreshKey }) => {
   const [formData, setFormData] = useState({
     product_id: "",
     quantity: "",
@@ -31,7 +31,7 @@ const PurchaseForm = ({ onSuccess }) => {
       }
     };
     fetchProducts();
-  }, []);
+  }, [refreshKey]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -94,7 +94,7 @@ const PurchaseForm = ({ onSuccess }) => {
               "& .MuiAutocomplete-listbox": { bgcolor: "#1e293b", color: "#f1f5f9" },
               "& .MuiAutocomplete-paper": { bgcolor: "#1e293b", color: "#f1f5f9" }
             }}
-            componentsProps={{
+            slotProps={{
               paper: {
                 sx: {
                   bgcolor: "#1e293b",
@@ -116,7 +116,7 @@ const PurchaseForm = ({ onSuccess }) => {
           />
           <TextField
             name="unit_price"
-            label="Unit Price ($)"
+            label="Unit Price (₹)"
             type="number"
             size="small"
             required

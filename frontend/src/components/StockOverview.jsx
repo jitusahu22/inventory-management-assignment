@@ -42,8 +42,8 @@ const StockOverview = ({ inventory }) => {
                     <TableCell sx={{ color: "#f1f5f9", borderBottom: "1px solid #334155" }}>{item.product_id}</TableCell>
                     <TableCell sx={{ color: "#f1f5f9", borderBottom: "1px solid #334155" }}>{item.product_name}</TableCell>
                     <TableCell align="right" sx={{ color: "#f1f5f9", borderBottom: "1px solid #334155" }}>{item.current_quantity}</TableCell>
-                    <TableCell align="right" sx={{ color: "#f1f5f9", borderBottom: "1px solid #334155" }}>${item.average_cost_per_unit.toFixed(2)}</TableCell>
-                    <TableCell align="right" sx={{ color: "#f1f5f9", borderBottom: "1px solid #334155" }}>${item.total_inventory_cost.toFixed(2)}</TableCell>
+                    <TableCell align="right" sx={{ color: "#f1f5f9", borderBottom: "1px solid #334155" }}>₹{(item.average_cost_per_unit ?? 0).toFixed(2)}</TableCell>
+                    <TableCell align="right" sx={{ color: "#f1f5f9", borderBottom: "1px solid #334155" }}>₹{(item.total_inventory_cost ?? 0).toFixed(2)}</TableCell>
                   </TableRow>
                 ))
               )}

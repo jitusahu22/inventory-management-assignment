@@ -1,19 +1,20 @@
 const { pool } = require("../config/db");
 const { calculateFIFO } = require("./fifoService");
+const { publishSaleEvent } = require("../kafka/producer");
 
 /**
  * Process a sale using FIFO.
  * Wraps everything in a database transaction for atomicity.
- *
- * NOTE: Later, the Kafka Consumer will call this same function
- * when it receives a sale event from the producer topic.
+ * Publishes a Kafka event after successful commit (unless skipKafka is set).
  *
  * @param {string} product_id
  * @param {number} quantity
  * @param {string} timestamp
+ * @param {object} [options]
+ * @param {boolean} [options.skipKafka=false] - Skip Kafka event publishing (used by consumer)
  * @returns {object} sale record
  */
-const processSale = async (product_id, quantity, timestamp) => {
+const processSale = async (product_id, quantity, timestamp, options = {}) => {
   // --- Validate required fields ---
   if (!product_id || quantity == null || !timestamp) {
     throw {
@@ -56,10 +57,15 @@ const processSale = async (product_id, quantity, timestamp) => {
 
     await client.query("COMMIT");
 
-    // TODO: After Kafka is integrated, publish a "sale" event here
-    // so other services can react to completed sales.
+    const sale = result.rows[0];
 
-    return result.rows[0];
+    // Publish Kafka event (non-blocking — failure does not affect the API response)
+    // Skip when called from Kafka consumer to prevent infinite event loops
+    if (!options.skipKafka) {
+      await publishSaleEvent(sale);
+    }
+
+    return sale;
   } catch (error) {
     await client.query("ROLLBACK");
     throw error;

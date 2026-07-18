@@ -20,7 +20,8 @@ import {
   DialogContent,
   DialogActions,
   Alert,
-  Snackbar
+  Snackbar,
+  CircularProgress
 } from "@mui/material";
 import { Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import Navbar from "../components/Navbar";
@@ -29,6 +30,7 @@ import api from "../api/api";
 const Products = ({ user, setUser }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [dataLoading, setDataLoading] = useState(true);
   
   // Form states
   const [newProduct, setNewProduct] = useState({ product_id: "", product_name: "" });
@@ -47,6 +49,8 @@ const Products = ({ user, setUser }) => {
     } catch (err) {
       console.error("Failed to fetch products", err);
       setError("Failed to load products.");
+    } finally {
+      setDataLoading(false);
     }
   }, []);
 
@@ -96,6 +100,7 @@ const Products = ({ user, setUser }) => {
   };
 
   const handleDeleteConfirm = async () => {
+    if (!deleteProductId) return;
     setLoading(true);
     setError("");
     try {
@@ -178,7 +183,13 @@ const Products = ({ user, setUser }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {products.length === 0 ? (
+                {dataLoading ? (
+                  <TableRow>
+                    <TableCell colSpan={3} align="center" sx={{ borderBottom: "none", py: 4 }}>
+                      <CircularProgress size={24} sx={{ color: "#3b82f6" }} />
+                    </TableCell>
+                  </TableRow>
+                ) : products.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={3} sx={{ color: "#94a3b8", textAlign: "center", py: 3 }}>
                       No products found.

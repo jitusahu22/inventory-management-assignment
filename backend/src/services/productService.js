@@ -77,9 +77,26 @@ const updateProduct = async (product_id, product_name) => {
 
 /**
  * Delete a product by product_id.
- * Throws if not found.
+ * Throws if not found or if product has existing inventory batches or sales.
  */
 const deleteProduct = async (product_id) => {
+  // Check for foreign key references before deleting
+  const batches = await pool.query(
+    "SELECT id FROM inventory_batches WHERE product_id = $1 LIMIT 1",
+    [product_id]
+  );
+  if (batches.rows.length > 0) {
+    throw { status: 409, message: `Cannot delete product '${product_id}': it has existing inventory batches` };
+  }
+
+  const sales = await pool.query(
+    "SELECT id FROM sales WHERE product_id = $1 LIMIT 1",
+    [product_id]
+  );
+  if (sales.rows.length > 0) {
+    throw { status: 409, message: `Cannot delete product '${product_id}': it has existing sales records` };
+  }
+
   const result = await pool.query(
     "DELETE FROM products WHERE product_id = $1 RETURNING *",
     [product_id]
