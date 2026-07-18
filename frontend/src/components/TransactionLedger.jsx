@@ -14,12 +14,12 @@ import {
 
 const TransactionLedger = ({ ledger }) => {
   return (
-    <Card sx={{ bgcolor: "#1e293b", color: "#f1f5f9", height: "100%" }}>
-      <CardContent>
-        <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+    <Card sx={{ bgcolor: "#1e293b", color: "#f1f5f9", height: "100%", display: "flex", flexDirection: "column" }}>
+      <CardContent sx={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0, p: 2, '&:last-child': { pb: 2 } }}>
+        <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, flexShrink: 0 }}>
           Transaction Ledger
         </Typography>
-        <TableContainer component={Paper} sx={{ bgcolor: "transparent", boxShadow: "none", maxHeight: 400 }}>
+        <TableContainer component={Paper} sx={{ bgcolor: "transparent", boxShadow: "none", flex: 1, minHeight: 0, overflow: "auto" }}>
           <Table size="small" stickyHeader>
             <TableHead>
               <TableRow>

@@ -41,32 +41,32 @@ const Dashboard = ({ user, setUser }) => {
     <Box sx={{ minHeight: "100vh", bgcolor: "#0f172a" }}>
       <Navbar user={user} onLogout={setUser} />
       
-      <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+      <Container maxWidth="xl" sx={{ pt: 3, pb: 3, height: "calc(100vh - 64px)", display: "flex", flexDirection: "column" }}>
         {loading ? (
-          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "50vh" }}>
+          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", flex: 1 }}>
             <CircularProgress sx={{ color: "#3b82f6" }} />
           </Box>
         ) : (
-        <Grid container spacing={3}>
+        <Grid container spacing={3} sx={{ flex: 1, minHeight: 0, m: 0, width: "100%" }}>
           {/* Left Column: Tables (2/3 width) */}
-          <Grid item xs={12} lg={8}>
+          <Grid item xs={12} lg={8} sx={{ height: "100%", pt: "0 !important" }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, height: '100%' }}>
-              <Box sx={{ flex: 1 }}>
+              <Box sx={{ flex: 1, minHeight: 0 }}>
                 <StockOverview inventory={inventory} />
               </Box>
-              <Box sx={{ flex: 1 }}>
+              <Box sx={{ flex: 1, minHeight: 0 }}>
                 <TransactionLedger ledger={ledger} />
               </Box>
             </Box>
           </Grid>
           
           {/* Right Column: Forms (1/3 width) */}
-          <Grid item xs={12} lg={4}>
+          <Grid item xs={12} lg={4} sx={{ height: "100%", pt: "0 !important" }}>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 3, height: "100%" }}>
-              <Box sx={{ flex: 1 }}>
+              <Box sx={{ flex: 1, minHeight: 0 }}>
                 <PurchaseForm onSuccess={handleSuccess} refreshKey={refreshKey} />
               </Box>
-              <Box sx={{ flex: 1 }}>
+              <Box sx={{ flex: 1, minHeight: 0 }}>
                 <SaleForm onSuccess={handleSuccess} refreshKey={refreshKey} />
               </Box>
             </Box>
