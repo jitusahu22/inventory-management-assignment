@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -7,6 +7,7 @@ import {
   Button,
   Box,
   Alert,
+  Autocomplete,
 } from "@mui/material";
 import api from "../api/api";
 
@@ -18,6 +19,19 @@ const PurchaseForm = ({ onSuccess }) => {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await api.get("/products");
+        setProducts(response.data.products || []);
+      } catch (err) {
+        console.error("Failed to fetch products", err);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,14 +69,39 @@ const PurchaseForm = ({ onSuccess }) => {
         {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
         
         <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-          <TextField
-            name="product_id"
-            label="Product ID"
-            size="small"
-            required
-            value={formData.product_id}
-            onChange={handleChange}
-            sx={{ "& .MuiOutlinedInput-root": { color: "#f1f5f9" }, "& .MuiInputLabel-root": { color: "#94a3b8" } }}
+          <Autocomplete
+            options={products}
+            getOptionLabel={(option) => `${option.product_name} (${option.product_id})`}
+            value={products.find((p) => p.product_id === formData.product_id) || null}
+            onChange={(event, newValue) => {
+              setFormData({ ...formData, product_id: newValue ? newValue.product_id : "" });
+            }}
+            isOptionEqualToValue={(option, value) => option.product_id === value.product_id}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Product"
+                size="small"
+                required
+                sx={{
+                  "& .MuiOutlinedInput-root": { color: "#f1f5f9" },
+                  "& .MuiInputLabel-root": { color: "#94a3b8" },
+                  "& .MuiSvgIcon-root": { color: "#94a3b8" }
+                }}
+              />
+            )}
+            sx={{
+              "& .MuiAutocomplete-listbox": { bgcolor: "#1e293b", color: "#f1f5f9" },
+              "& .MuiAutocomplete-paper": { bgcolor: "#1e293b", color: "#f1f5f9" }
+            }}
+            componentsProps={{
+              paper: {
+                sx: {
+                  bgcolor: "#1e293b",
+                  color: "#f1f5f9"
+                }
+              }
+            }}
           />
           <TextField
             name="quantity"

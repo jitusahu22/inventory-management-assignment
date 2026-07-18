@@ -1,30 +1,11 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import Products from "./pages/Products";
 import api from "./api/api";
 
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-    primary: { main: "#3b82f6" },
-    background: {
-      default: "#0f172a",
-      paper: "#1e293b",
-    },
-    text: {
-      primary: "#f1f5f9",
-      secondary: "#94a3b8",
-    },
-  },
-  typography: {
-    fontFamily: "'Inter', 'Roboto', sans-serif",
-  },
-  shape: {
-    borderRadius: 8,
-  },
-});
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -50,8 +31,7 @@ function App() {
   }
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
+    <>
       <Routes>
         <Route
           path="/"
@@ -69,8 +49,18 @@ function App() {
             )
           }
         />
+        <Route
+          path="/products"
+          element={
+            user ? (
+              <Products user={user} setUser={setUser} />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
       </Routes>
-    </ThemeProvider>
+    </>
   );
 }
 

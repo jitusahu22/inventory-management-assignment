@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inventory Pro - Sign In</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-secondary-fixed-variant": "#3323cc",
+                        "on-surface": "#191b23",
+                        "secondary-fixed": "#e2dfff",
+                        "secondary": "#4b41e1",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#525657",
+                        "inverse-on-surface": "#f0f0fb",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#dbe1ff",
+                        "on-surface-variant": "#434655",
+                        "secondary-container": "#645efb",
+                        "on-secondary-fixed": "#0f0069",
+                        "surface-variant": "#e1e2ed",
+                        "tertiary-container": "#6b6e70",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "surface-dim": "#d9d9e5",
+                        "primary": "#004ac6",
+                        "surface-container": "#ededf9",
+                        "surface-tint": "#0053db",
+                        "secondary-fixed-dim": "#c3c0ff",
+                        "surface-bright": "#faf8ff",
+                        "tertiary-fixed": "#e0e3e5",
+                        "outline-variant": "#c3c6d7",
+                        "surface-container-low": "#f3f3fe",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#00174b",
+                        "outline": "#737686",
+                        "error": "#ba1a1a",
+                        "surface": "#faf8ff",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "inverse-primary": "#b4c5ff",
+                        "inverse-surface": "#2e3039",
+                        "surface-container-high": "#e7e7f3",
+                        "error-container": "#ffdad6",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#eeefff",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-secondary-container": "#fffbff",
+                        "on-error-container": "#93000a",
+                        "background": "#faf8ff",
+                        "primary-container": "#2563eb",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "on-tertiary-container": "#eff1f3",
+                        "surface-container-highest": "#e1e2ed",
+                        "on-background": "#191b23"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "unit": "8px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "xxl": "48px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "code-mono": ["JetBrains Mono"],
+                        "display-lg": ["Inter"],
+                        "title-sm": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "code-mono": ["13px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "title-sm": ["18px", {"lineHeight": "26px", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg-mobile": ["28px", {"lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .shimmer-effect {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .custom-ring:focus {
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex items-center justify-center font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+<main class="w-full h-screen flex flex-row overflow-hidden bg-surface-container-lowest">
+<!-- Left Side: Visual Experience -->
+<section class="hidden lg:flex lg:w-1/2 relative bg-primary-fixed overflow-hidden flex-col items-center justify-center p-xl">
+<!-- Background Decorative Elements -->
+<div class="absolute inset-0 z-0">
+<div class="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -mr-48 -mt-48"></div>
+<div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-primary/5 to-transparent"></div>
+</div>
+<!-- Central 3D Illustration / Graphic Container -->
+<div class="relative z-10 w-full max-w-lg aspect-square flex items-center justify-center">
+<div class="w-full h-full rounded-xl overflow-hidden shadow-2xl transition-transform hover:scale-[1.02] duration-700">
+<img class="w-full h-full object-cover" data-alt="A premium 3D isometric illustration of a futuristic warehouse and supply chain hub. Floating translucent blue panels show real-time inventory data analytics. Glossy white delivery drones and automated logistics paths are rendered with soft ambient lighting and sharp focus. The scene uses a clean, high-contrast palette of royal blue, clinical white, and slate gray against a bright minimalist background. The mood is professional, efficient, and technologically superior." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9qKbk7v3Db0O8K1WUd_EacDeq4uiqKll11_JlsdLG2Ji7ly6uFp26LT9CS6iQV4nKrpKWxfeT33GnC5MO0sQrzAkUAotgObEBrt-DzSgOi_xrQKC7V2VjuNFKc2eRZAzlsELqSWLSF1zGOdByx_vVT0tkPWUogzbkMLXcOIG2rAGboGtaVNgYJPVqsQArqKxw9TYiFTr_rlGvtShBA0-VcJgshiJaqizNglukdfGzI-C5GKIUgwr3"/>
+</div>
+<!-- Floaties / Micro-interactions -->
+<div class="absolute -top-12 -right-12 p-lg glass-panel rounded-xl shadow-xl animate-bounce-slow">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">package_2</span>
+</div>
+<div>
+<p class="font-label-caps text-on-surface-variant">STOCK STATUS</p>
+<p class="font-title-sm text-on-surface">98.4% Optimal</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Text Content -->
+<div class="relative z-10 mt-xl text-center max-w-md">
+<h2 class="font-display-lg text-primary mb-md">Master Your Supply Chain</h2>
+<p class="font-body-md text-on-surface-variant px-lg">
+                    Experience the next generation of inventory management with real-time tracking, AI-driven insights, and seamless logistics integration.
+                </p>
+</div>
+</section>
+<!-- Right Side: Login Form -->
+<section class="w-full lg:w-1/2 flex flex-col items-center justify-center p-lg md:p-xxl bg-white">
+<div class="w-full max-w-[420px] flex flex-col">
+<!-- Brand Identity -->
+<header class="mb-xxl flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+</div>
+<div>
+<h1 class="font-headline-md text-on-surface tracking-tight">Inventory Pro</h1>
+<p class="font-label-caps text-outline uppercase tracking-widest text-[10px]">Enterprise Edition</p>
+</div>
+</header>
+<!-- Welcome Text -->
+<div class="mb-xl">
+<h2 class="font-display-lg-mobile md:font-display-lg text-on-surface mb-xs">Welcome back</h2>
+<p class="font-body-md text-on-surface-variant">Sign in to manage your global operations.</p>
+</div>
+<!-- Form -->
+<form class="space-y-lg">
+<!-- Email / Username -->
+<div class="space-y-sm">
+<label class="block font-label-caps text-on-surface-variant ml-1" for="username">USERNAME OR EMAIL</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-outline text-[20px]">person</span>
+<input class="w-full pl-xl pr-md py-md bg-surface-container-low border border-outline-variant/50 rounded-lg font-body-md text-on-surface placeholder:text-outline/60 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all custom-ring" id="username" name="username" placeholder="name@company.com" type="text"/>
+</div>
+</div>
+<!-- Password -->
+<div class="space-y-sm">
+<div class="flex justify-between items-center px-1">
+<label class="block font-label-caps text-on-surface-variant" for="password">PASSWORD</label>
+<a class="font-label-caps text-primary hover:text-secondary-container transition-colors" href="#">Forgot password?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-outline text-[20px]">lock</span>
+<input class="w-full pl-xl pr-xl py-md bg-surface-container-low border border-outline-variant/50 rounded-lg font-body-md text-on-surface placeholder:text-outline/60 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all custom-ring" id="password" name="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-md top-1/2 -translate-y-1/2 text-outline hover:text-on-surface-variant transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- Remember Me -->
+<div class="flex items-center gap-3 px-1">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/20" id="remember" name="remember" type="checkbox"/>
+<label class="font-body-sm text-on-surface-variant cursor-pointer select-none" for="remember">Remember this device for 30 days</label>
+</div>
+<!-- CTA Button -->
+<button class="w-full py-md bg-primary-container text-on-primary font-title-sm rounded-lg shadow-lg shadow-primary-container/20 hover:bg-primary-container/90 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 group" type="submit">
+                        Sign In
+                        <span class="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
+</button>
+</form>
+<!-- Alternative Methods -->
+<div class="mt-xl">
+<div class="relative flex items-center py-sm">
+<div class="flex-grow border-t border-outline-variant/30"></div>
+<span class="flex-shrink mx-md font-label-caps text-outline">OR CONTINUE WITH</span>
+<div class="flex-grow border-t border-outline-variant/30"></div>
+</div>
+<div class="mt-lg grid grid-cols-2 gap-md">
+<button class="flex items-center justify-center gap-2 py-md border border-outline-variant/50 rounded-lg font-body-sm text-on-surface hover:bg-surface-container-low transition-colors active:scale-[0.98]">
+<svg class="w-5 h-5" viewbox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path></svg>
+                            Google
+                        </button>
+<button class="flex items-center justify-center gap-2 py-md border border-outline-variant/50 rounded-lg font-body-sm text-on-surface hover:bg-surface-container-low transition-colors active:scale-[0.98]">
+<svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"></path></svg>
+                            SSO
+                        </button>
+</div>
+</div>
+<!-- Footer Links -->
+<footer class="mt-xxl text-center">
+<p class="font-body-sm text-outline">
+                        Don't have an account? 
+                        <a class="text-primary font-semibold hover:underline" href="#">Contact Sales</a>
+</p>
+<div class="flex items-center justify-center gap-md mt-lg text-[12px] font-label-caps text-outline/60">
+<a class="hover:text-on-surface-variant transition-colors" href="#">Privacy Policy</a>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<a class="hover:text-on-surface-variant transition-colors" href="#">Terms of Service</a>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<a class="hover:text-on-surface-variant transition-colors" href="#">Support</a>
+</div>
+</footer>
+</div>
+</section>
+</main>
+<script>
+        // Simple micro-interaction for password visibility toggle
+        const toggleBtn = document.querySelector('button[type="button"]');
+        const passwordInput = document.getElementById('password');
+        const icon = toggleBtn.querySelector('.material-symbols-outlined');
+
+        toggleBtn.addEventListener('click', () => {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            icon.textContent = isPassword ? 'visibility_off' : 'visibility';
+        });
+
+        // Form submission animation simulation
+        const loginForm = document.querySelector('form');
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = loginForm.querySelector('button[type="submit"]');
+            const originalContent = btn.innerHTML;
+            
+            btn.disabled = true;
+            btn.innerHTML = `
+                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Authenticating...
+            `;
+
+            setTimeout(() => {
+                btn.innerHTML = `<span class="material-symbols-outlined">check_circle</span> Verified`;
+                btn.classList.replace('bg-primary-container', 'bg-green-600');
+                setTimeout(() => {
+                    alert('Login Simulation Successful!');
+                    btn.disabled = false;
+                    btn.innerHTML = originalContent;
+                    btn.classList.replace('bg-green-600', 'bg-primary-container');
+                }, 1000);
+            }, 2000);
+        });
+    </script>
+</body></html>
