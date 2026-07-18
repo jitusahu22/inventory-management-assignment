@@ -18,15 +18,15 @@ const StockOverview = ({ inventory }) => {
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
           Product Stock Overview
         </Typography>
-        <TableContainer component={Paper} sx={{ bgcolor: "transparent", boxShadow: "none" }}>
-          <Table size="small">
+        <TableContainer component={Paper} sx={{ bgcolor: "transparent", boxShadow: "none", maxHeight: 400 }}>
+          <Table size="small" stickyHeader>
             <TableHead>
               <TableRow>
-                <TableCell sx={{ color: "#94a3b8", borderBottom: "1px solid #334155" }}>Product ID</TableCell>
-                <TableCell sx={{ color: "#94a3b8", borderBottom: "1px solid #334155" }}>Name</TableCell>
-                <TableCell align="right" sx={{ color: "#94a3b8", borderBottom: "1px solid #334155" }}>Qty</TableCell>
-                <TableCell align="right" sx={{ color: "#94a3b8", borderBottom: "1px solid #334155" }}>Avg Cost</TableCell>
-                <TableCell align="right" sx={{ color: "#94a3b8", borderBottom: "1px solid #334155" }}>Total Value</TableCell>
+                <TableCell sx={{ bgcolor: "#1e293b", color: "#94a3b8", borderBottom: "1px solid #334155" }}>Product ID</TableCell>
+                <TableCell sx={{ bgcolor: "#1e293b", color: "#94a3b8", borderBottom: "1px solid #334155" }}>Name</TableCell>
+                <TableCell align="right" sx={{ bgcolor: "#1e293b", color: "#94a3b8", borderBottom: "1px solid #334155" }}>Qty</TableCell>
+                <TableCell align="right" sx={{ bgcolor: "#1e293b", color: "#94a3b8", borderBottom: "1px solid #334155" }}>Avg Cost</TableCell>
+                <TableCell align="right" sx={{ bgcolor: "#1e293b", color: "#94a3b8", borderBottom: "1px solid #334155" }}>Total Value</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

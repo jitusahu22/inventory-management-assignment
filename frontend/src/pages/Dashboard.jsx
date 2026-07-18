@@ -48,11 +48,19 @@ const Dashboard = ({ user, setUser }) => {
           </Box>
         ) : (
         <Grid container spacing={3}>
-          {/* Top Row: Stock Overview (2/3 width) and Action Forms (1/3 width split) */}
+          {/* Left Column: Tables (2/3 width) */}
           <Grid item xs={12} lg={8}>
-            <StockOverview inventory={inventory} />
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, height: '100%' }}>
+              <Box sx={{ flex: 1 }}>
+                <StockOverview inventory={inventory} />
+              </Box>
+              <Box sx={{ flex: 1 }}>
+                <TransactionLedger ledger={ledger} />
+              </Box>
+            </Box>
           </Grid>
           
+          {/* Right Column: Forms (1/3 width) */}
           <Grid item xs={12} lg={4}>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 3, height: "100%" }}>
               <Box sx={{ flex: 1 }}>
@@ -62,11 +70,6 @@ const Dashboard = ({ user, setUser }) => {
                 <SaleForm onSuccess={handleSuccess} refreshKey={refreshKey} />
               </Box>
             </Box>
-          </Grid>
-
-          {/* Bottom Row: Transaction Ledger (Full width) */}
-          <Grid item xs={12}>
-            <TransactionLedger ledger={ledger} />
           </Grid>
         </Grid>
         )}
