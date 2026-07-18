@@ -15,7 +15,7 @@ const getLedger = async () => {
        product_id,
        quantity,
        unit_price,
-       NULL::NUMERIC AS total_cost,
+       (quantity * unit_price)::NUMERIC AS total_cost,
        timestamp
      FROM inventory_batches
 
@@ -25,7 +25,7 @@ const getLedger = async () => {
        'sale' AS type,
        product_id,
        quantity,
-       NULL::NUMERIC AS unit_price,
+       (total_cost / quantity)::NUMERIC AS unit_price,
        total_cost,
        timestamp
      FROM sales

@@ -27,13 +27,14 @@ const TransactionLedger = ({ ledger }) => {
                 <TableCell sx={{ bgcolor: "#1e293b", color: "#94a3b8", borderBottom: "1px solid #334155" }}>Type</TableCell>
                 <TableCell sx={{ bgcolor: "#1e293b", color: "#94a3b8", borderBottom: "1px solid #334155" }}>Product</TableCell>
                 <TableCell align="right" sx={{ bgcolor: "#1e293b", color: "#94a3b8", borderBottom: "1px solid #334155" }}>Qty</TableCell>
+                <TableCell align="right" sx={{ bgcolor: "#1e293b", color: "#94a3b8", borderBottom: "1px solid #334155" }}>Rate</TableCell>
                 <TableCell align="right" sx={{ bgcolor: "#1e293b", color: "#94a3b8", borderBottom: "1px solid #334155" }}>Amount</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {ledger.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} align="center" sx={{ color: "#64748b", borderBottom: "none", py: 3 }}>
+                  <TableCell colSpan={6} align="center" sx={{ color: "#64748b", borderBottom: "none", py: 3 }}>
                     No transactions yet
                   </TableCell>
                 </TableRow>
@@ -58,9 +59,10 @@ const TransactionLedger = ({ ledger }) => {
                     <TableCell sx={{ color: "#f1f5f9", borderBottom: "1px solid #334155" }}>{txn.product_id}</TableCell>
                     <TableCell align="right" sx={{ color: "#f1f5f9", borderBottom: "1px solid #334155" }}>{txn.quantity}</TableCell>
                     <TableCell align="right" sx={{ color: "#f1f5f9", borderBottom: "1px solid #334155" }}>
-                      {txn.type === "purchase"
-                        ? `₹${parseFloat(txn.unit_price || 0).toFixed(2)}/u`
-                        : `₹${parseFloat(txn.total_cost || 0).toFixed(2)}`}
+                      ₹{parseFloat(txn.unit_price || 0).toFixed(2)}
+                    </TableCell>
+                    <TableCell align="right" sx={{ color: "#f1f5f9", borderBottom: "1px solid #334155" }}>
+                      ₹{parseFloat(txn.total_cost || 0).toFixed(2)}
                     </TableCell>
                   </TableRow>
                 ))
