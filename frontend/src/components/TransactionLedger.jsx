@@ -39,7 +39,7 @@ const TransactionLedger = ({ ledger }) => {
                 </TableRow>
               ) : (
                 ledger.map((txn, idx) => (
-                  <TableRow key={idx} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                  <TableRow key={`${txn.type}-${txn.product_id}-${txn.timestamp}-${idx}`} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                     <TableCell sx={{ color: "#f1f5f9", borderBottom: "1px solid #334155" }}>
                       {new Date(txn.timestamp).toLocaleString()}
                     </TableCell>

@@ -30,7 +30,7 @@ const getLedger = async () => {
        timestamp
      FROM sales
 
-     ORDER BY timestamp ASC`
+     ORDER BY timestamp DESC`
   );
 
   return result.rows;
